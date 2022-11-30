@@ -13,14 +13,14 @@ const showName = function (props) {
 };
 
 return (
-<li onClick = {() => props.setInterviewer(props.id)} 
+<li onClick = {props.setInterviewer} 
   className={interviewerClass}>
   <img
     className="interviewers__item-image"
     src={props.avatar}
     alt={props.name}
   />
-  {showName(props)} 
+  {props.selected && props.name} 
 </li>
 );
 }
