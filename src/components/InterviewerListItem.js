@@ -6,11 +6,6 @@ export default function InterviewerListItem (props){
 const interviewerClass = classNames("interviewer__item" ,{
   "interviewers__item--selected": props.selected}
 );
-const showName = function (props) {
-  if (props.selected) {
-    return props.name
-  } 
-};
 
 return (
 <li onClick = {props.setInterviewer} 
