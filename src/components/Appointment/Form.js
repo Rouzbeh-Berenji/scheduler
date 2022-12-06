@@ -1,54 +1,58 @@
+
 import React, { useState } from "react";
-import InterviewerList from "components/InterviewerList";
-import Button from "components/Button";
 
-
+import Button from "components/Button.js";
+import InterviewerList from "components/InterviewerList.js"
 
 export default function Form(props) {
+  const [name, setName] = useState(props.name || "")
+  const [error, setError] = useState("")
+  const [interviewer, setInterviewer] = useState(props.value || null)
 
-
-  const [student, setStudent] = useState(props.student || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const handleInput = (event) => {
+    setName(event.target.value)
+  }
 
   const reset = () => {
-    setStudent("");
-    setInterviewer(null);
-  };
+    setName("")
+    setInterviewer(null)
+    setError("")
+  }
 
-  const cancel = () => {
-    reset();
-    props.onCancel();
-  };
+  const validate = () => {
+    if(name === ""){
+      setError("Student name cannot be blank")
+      return
+    }
+
+    props.save(name, interviewer)
+    setError("")
+  }
 
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off"
-          onSubmit={event => event.preventDefault()}>
+        <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
-            value={student}
             placeholder="Enter Student Name"
-            onChange={(event) => setStudent(event.target.value)}
-
+            value={name}
+            onChange={handleInput}
+            data-testid="student-name-input"
           />
         </form>
-        <InterviewerList
-          interviewers={props.interviewers}
-          onChange={setInterviewer}
-          value={interviewer}
-
-        />
+        <section className="appointment__validation">{error}</section>
+        <InterviewerList interviewers={props.interviewers} value={interviewer} onChange={setInterviewer} />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel} >Cancel</Button>
-          <Button confirm onClick={props.onSave}>Save</Button>
+          <Button onClick={() => {reset(); props.onCancel()}} danger>Cancel</Button>
+          <Button onClick={() => validate()} confirm>Save</Button>
         </section>
       </section>
     </main>
-
-  );
+  )
 }
+
