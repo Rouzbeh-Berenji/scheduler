@@ -4,71 +4,33 @@ import DayList from "./DayList";
 import Appointment from "components/Appointment";
 import "./Application.scss";
 import { getAppointmentsForDay, getInterviewersForDay , getInterview} from "helpers/selectors";
+import { useApplicationData } from "hooks/useApplicationData";
 
 
 
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewer: {}
-  });
+  
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
-
-
-  useEffect(() => {
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
-    ])
-      .then((all) => {
-        const days = all[0].data;
-        const appointments = all[1].data;
-        const interviewers = all[2].data
-
-        setState(prev => ({ ...prev, days, appointments, interviewers }));
-      });
-  }, []);
-
-
-  const setDay = day => {setState({ ...state, day })};
-
-  const bookInterview = function(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: {...interview}
-    }
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-
-    return axios.put(`/api/appointments/${id}`, {interview})
-    .then(setState(prev =>({...prev, appointments})))
-  };
-    
-    function save(name, interviewer) {
-      const interview = {
-        student: name,
-        interviewer
-      }
-    };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   const appointmentArray = dailyAppointments.map((appointment) => {
-      return <Appointment
+    return <Appointment
       key={appointment.id}
       id={appointment.id}
       time={appointment.time}
       interview={getInterview(state, state.appointments[appointment.id].interview)}
       interviewers={dailyInterviewers}
-      // bookInterview={bookInterview}
-      // cancelInterview={cancelInterview}
+      bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
     />
   });
 
