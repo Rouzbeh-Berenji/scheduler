@@ -1,23 +1,21 @@
 export function getAppointmentsForDay(state, day) {
-    //find d (day) object that match with the given day as an argument
-    const dayObj = state.days.find(d => d.name === day);
-    const result = [];
+    //... returns an array of appointments for that day
+  let appointmentIdArray = [];
+  let appointmentArray = [];
+  for (const eachDay of state.days) {
+    if (eachDay.name === day) {appointmentIdArray = eachDay.appointments;}
+  }
 
-    if (!dayObj) { return result;}
-    // matching appoinments id from the selected day to appoinments object
-    for(let id of dayObj.appointments){
-      const appointment = state.appointments[id]
-      result.push(appointment)
-    }
-      return result;
-  };
+  if (appointmentIdArray.length === 0) { return [];}
 
-
+  for (const appointment of appointmentIdArray) {
+    appointmentArray.push(state.appointments[appointment]);
+  }
+  return appointmentArray;
+}
   
   export function getInterview(state, interview) {
-    if (interview === null) {
-      return null;
-    }
+    if (interview === null) {return null;}
     // get the id of the interviewer from the interview
     let interviewerID = interview.interviewer;
     // get the interviewer info as we now have their id
@@ -31,14 +29,10 @@ export function getAppointmentsForDay(state, day) {
     let interviewerIdArray = [];
     let interviewerArray = [];
     for (const eachDay of state.days) {
-      if (eachDay.name === day) {
-        interviewerIdArray = eachDay.interviewers;
-      }
+      if (eachDay.name === day) {interviewerIdArray = eachDay.interviewers;}
     }
   
-    if (interviewerIdArray.length === 0) {
-      return [];
-    }
+    if (interviewerIdArray.length === 0) {return [];}
   
     for (const interviewer of interviewerIdArray) {
       interviewerArray.push(state.interviewers[interviewer]);

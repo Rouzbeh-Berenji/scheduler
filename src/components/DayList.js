@@ -9,7 +9,7 @@ const eachday = props.days.map((day) => {
     name = {day.name}
     spots = {day.spots}
     selected = {day.name === props.value}
-    setDay = {props.onChane}
+    setDay = {props.onChange}
     />
   );
 }) ;

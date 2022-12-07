@@ -72,15 +72,15 @@ export default function Appointment(props) {
   return (
     <article className="appointment">
       <Header time={props.time}/>
-      {mode === SHOW && props.interview && <Show student={props.interview.student} interviewer={props.interview.interviewer} onEdit={() => transition(EDIT)} onDelete={() => transition(CONFIRM)} />}
+      {mode === SHOW && props.interview && <Show student={props.interview.student} interviewer={props.interview.interviewer} onEdit={() => transition(EDIT)} onDelete={() => transition(CONFIRM)}/>}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === CREATE && <Form interviewers={props.interviewers} save={save} onCancel={back} />}
       {mode === SAVING && <Status message="SAVING" />}
-      {mode === CONFIRM && <Confirm message="Are you sure?" onCancel={back} onConfirm={destroy} />}
+      {mode === CONFIRM && <Confirm message="Are you sure?" onCancel={back} onConfirm={destroy}/>}
       {mode === DELETING && <Status message="DELETING" />}
-      {mode === EDIT && <Form interviewers={props.interviewers} save={edit} onCancel={back} name={props.interview.student} interviewer={props.interview.interviewer} />}
-      {mode === ERROR_SAVE && <Error message="Could not save the interview" onClose={back} />}
-      {mode === ERROR_DELETE && <Error message="Could not delete the interview" onClose={back} />}
+      {mode === EDIT && <Form interviewers={props.interviewers} save={edit} onCancel={back} name={props.interview.student} interviewer={props.interview.interviewer}/>}
+      {mode === ERROR_SAVE && <Error message="Could not save the interview" onClose={back}/>}
+      {mode === ERROR_DELETE && <Error message="Could not delete the interview" onClose={back}/>}
     </article>
   );
 } 
