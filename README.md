@@ -54,7 +54,8 @@ npm run storybook
     "@testing-library/react": "^8.0.9",
     "babel-loader": "^8.0.5",
     "prop-types": "^15.8.1",
-    "sass": "^1.53.0"
+    "sass": "^1.53.0",
+    "react-test-renderer": "^16.14.0"
 
 ## Remember you had to install a very specific version of react-test-renderer to match the version of react and react-dom in the project. you can follow the instructions from the react-hooks-testing-library documetation 
 : (https://github.com/testing-library/react-hooks-testing-library#peer-dependencies)
